@@ -7,6 +7,7 @@ using System.Threading;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System.Diagnostics;
+using OpenQA.Selenium.Interactions;
 
 namespace css_test_otomasyon
 {
@@ -17,17 +18,29 @@ namespace css_test_otomasyon
         {
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             driver.Manage().Window.Maximize();
-            
         }
-        public void urlGit()
-        {
-            driver.Navigate().GoToUrl("https://www.n11.com/");
 
+        public void kategori(string x,string y)
+        {
+            Actions act = new Actions(driver);
+            var element = driver.FindElement(By.XPath(x));
+            act.MoveToElement(element).Perform();
+            driver.FindElement(By.XPath(y)).Click();
+        }
+        public void urlGit(string x)
+        {
+            driver.Navigate().GoToUrl(x);
         }
 
         public void search()
         {
             driver.FindElement(By.Id("searchData")).SendKeys("Spor ayakkabı" + OpenQA.Selenium.Keys.Enter);
+        }
+
+        public void buttonClick(string x)
+        {
+            driver.FindElement(By.CssSelector(x)).Click();
+            Thread.Sleep(1000);
         }
 
         public void pop_up()
@@ -43,7 +56,7 @@ namespace css_test_otomasyon
             }
         }
 
-        public void kvk()
+        public void kvkk()
         {
             try
             {
@@ -55,63 +68,38 @@ namespace css_test_otomasyon
                 Console.WriteLine(ex);
             }
 
-            Console.WriteLine("Sayfa Başlığı" + driver.Title + "sayfa Url:" + driver.Url);
-            var productPrice = driver.FindElement(By.CssSelector("div#newCheckout table:nth-child(6) div.priceArea span")).Text;
-            var productPrice2 = driver.FindElement(By.CssSelector("div#newCheckout table:nth-child(5) div.priceArea span")).Text;
-            Console.WriteLine("1. Ürünün Sepet Fiyatı:" + productPrice + " " + "2. Ürünün Sepet Fiyatı:" + productPrice2);
+            //Console.WriteLine("Sayfa Başlığı" + driver.Title + "sayfa Url:" + driver.Url);
+            //var productPrice = driver.FindElement(By.CssSelector("div#newCheckout table:nth-child(6) div.priceArea span")).Text;
+            //var productPrice2 = driver.FindElement(By.CssSelector("div#newCheckout table:nth-child(5) div.priceArea span")).Text;
+            //Console.WriteLine("1. Ürünün Sepet Fiyatı:" + productPrice + " " + "2. Ürünün Sepet Fiyatı:" + productPrice2);
         }
 
         public void scrollDown()
         {
-            var element = driver.FindElement(By.CssSelector("div#p-238339646 h3.productName"));
+            var element = driver.FindElement(By.CssSelector("div#contentListing a.active"));
             var js = (IJavaScriptExecutor)driver;
             js.ExecuteScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'})", element);
         }
 
-        public void product1()
+        public void productOptions(string x)
         {
-            driver.FindElement(By.CssSelector("div#p-449429646 h3.productName")).Click();
+            driver.FindElement(By.XPath(x)).Click();
+
+            //support kütüphanesi ile option yakalama
+
+            //var element = driver.FindElement(By.Id(x));
+            //var selectElement = new SelectElement(element);
+            //selectElement.SelectByIndex(2);
+            //var element2 = driver.FindElement(By.Id(y));
+            //var selectElement2 = new SelectElement(element2);
+            //selectElement2.SelectByIndex(2);
+
         }
 
-        public void product2()
-        {
-            driver.FindElement(By.CssSelector("div#p-238339646 h3.productName")).Click();
-
-        }
-
-        public void productOptions1()
-        {
-            driver.FindElement(By.XPath(".//*[@id = '768877666']/option[2]")).Click();
-            driver.FindElement(By.XPath(".//*[@id = '768877667']/option[2]")).Click();
-        }
-
-        public void addBasket()
-        {
-            driver.FindElement(By.ClassName("btnAddBasket")).Click();
-            Thread.Sleep(1000);
-        }
-
-        public void basket()
-        {
-            driver.FindElement(By.ClassName("iconBasket")).Click();
-
-
-        }
 
         public void Back()
         {
             driver.Navigate().Back();
-        }
-
-        public void productOptions2()
-        {
-            driver.FindElement(By.XPath(".//*[@id = '754652198']/option[2]")).Click();
-            driver.FindElement(By.XPath(".//*[@id = '754652199']/option[2]")).Click();
-        }
-
-        public void buyButton()
-        {
-            driver.FindElement(By.Id("js-buyBtn")).Click();
         }
 
         public void login()
@@ -121,13 +109,12 @@ namespace css_test_otomasyon
             driver.FindElement(By.Id("loginButton")).Click();
         }
 
-        public void comparassion()
-        {
-            var priceText = driver.FindElement(By.CssSelector("div#p-449429646 ins")).Text;
-            var priceText2 = driver.FindElement(By.CssSelector("#p-238339646 ins")).Text;
-            Console.WriteLine("1. Ürünün Fiyatı:" + priceText + " " + "2. Ürünün Fiyatı:" + priceText2);
-            
-        }
+        //public void comparassion()
+        //{
+        //    var priceText = driver.FindElement(By.CssSelector("div#p-449429646 ins")).Text;
+        //    var priceText2 = driver.FindElement(By.CssSelector("#p-238339646 ins")).Text;
+        //    Console.WriteLine("1. Ürünün Fiyatı:" + priceText + " " + "2. Ürünün Fiyatı:" + priceText2);
+        //}
 
 
     }
